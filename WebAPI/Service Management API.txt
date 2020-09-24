@@ -1,0 +1,7 @@
+Service Management API
+Service Control API
+Cloud Resource Manager API
+Compute Engine API
+Kubernetes Engine API
+Google Container Registry API
+Cloud Build APIdotnet new --help
