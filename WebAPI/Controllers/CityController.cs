@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Data.Repo;
 using WebAPI.Interfaces;
+using WebAPI.DTOs;
+using System;
+using System.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -24,7 +27,14 @@ namespace WebAPI.Controllers
         {
             //var cities = await dc.Cities.ToListAsync();
             var cities = await uow.CityRepository.GetCitiesAsync();
-            return Ok(cities);
+
+            var citiesDto = from c in cities
+                select new CityDto()
+                {
+                  Id = c.Id,
+                  Name = c.Name
+                };
+            return Ok(citiesDto);
         }
 
         // //Post api/city/add?cityname=Miami
@@ -42,8 +52,14 @@ namespace WebAPI.Controllers
 
         //Post api/city/post --Post the data in Json Format
         [HttpPost("post")]
-        public async Task<IActionResult> AddCity(City city)
+        public async Task<IActionResult> AddCity(CityDto cityDto)
         {
+            var city = new City{
+              Name = cityDto.Name,
+              LastUpdatedBy = 1,
+              LastUpdatedOn = DateTime.Now
+
+            };
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
             return StatusCode(201);
