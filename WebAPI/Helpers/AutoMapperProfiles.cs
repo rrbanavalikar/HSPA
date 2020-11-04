@@ -8,6 +8,7 @@ namespace WebAPI.Helpers
     {
       public AutoMapperProfiles()
       {
+        //comment
           CreateMap<City, CityDto>().ReverseMap();
       }
     }
