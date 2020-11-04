@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 using WebAPI.Interfaces;
+using AutoMapper;
+using WebAPI.Helpers;
 
 namespace WebAPI
 {
@@ -25,6 +27,7 @@ namespace WebAPI
             options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllers();
             services.AddCors();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

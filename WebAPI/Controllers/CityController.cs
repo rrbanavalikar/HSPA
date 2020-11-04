@@ -6,6 +6,8 @@ using WebAPI.Interfaces;
 using WebAPI.DTOs;
 using System;
 using System.Linq;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace WebAPI.Controllers
 {
@@ -15,10 +17,12 @@ namespace WebAPI.Controllers
     {
           private readonly ICityRepository repo;
         private readonly IUnitOfWork uow;
+        private readonly IMapper mapper;
 
-        public CityController(IUnitOfWork uow)
+        public CityController(IUnitOfWork uow, IMapper mapper)
         {
             this.uow = uow;
+            this.mapper = mapper;
         }
 
         //GET api/city
@@ -27,13 +31,14 @@ namespace WebAPI.Controllers
         {
             //var cities = await dc.Cities.ToListAsync();
             var cities = await uow.CityRepository.GetCitiesAsync();
+            var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
 
-            var citiesDto = from c in cities
-                select new CityDto()
-                {
-                  Id = c.Id,
-                  Name = c.Name
-                };
+            // var citiesDto = from c in cities
+            //     select new CityDto()
+            //     {
+            //       Id = c.Id,
+            //       Name = c.Name
+            //     };
             return Ok(citiesDto);
         }
 
@@ -54,12 +59,16 @@ namespace WebAPI.Controllers
         [HttpPost("post")]
         public async Task<IActionResult> AddCity(CityDto cityDto)
         {
-            var city = new City{
-              Name = cityDto.Name,
-              LastUpdatedBy = 1,
-              LastUpdatedOn = DateTime.Now
+            var city = mapper.Map<City>(cityDto);
+            city.LastUpdatedBy = 1;
+            city.LastUpdatedOn = DateTime.Now;
 
-            };
+            // var city = new City{
+            //   Name = cityDto.Name,
+            //   LastUpdatedBy = 1,
+            //   LastUpdatedOn = DateTime.Now
+            // };
+
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
             return StatusCode(201);
