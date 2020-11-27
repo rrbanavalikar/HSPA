@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace WebAPI.Controllers
 {
@@ -72,6 +73,40 @@ namespace WebAPI.Controllers
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
             return StatusCode(201);
+        }
+
+        [HttpPatch("update/{id}")]
+         public async Task<IActionResult> UpdateCityPatch(int id, JsonPatchDocument<City> cityToPatch)
+        {
+            var cityFromDb = await uow.CityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+
+            cityToPatch.ApplyTo(cityFromDb, ModelState);
+            await uow.SaveAsync();
+            return StatusCode(200);
+        }
+
+        [HttpPut("update/{id}")]
+         public async Task<IActionResult> UpdateCity(int id,CityDto cityDto)
+        {
+            var cityFromDb = await uow.CityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+            mapper.Map(cityDto, cityFromDb);
+            await uow.SaveAsync();
+            return StatusCode(200);
+        }
+
+        [HttpPut("updateCityName/{id}")]
+         public async Task<IActionResult> UpdateCity(int id,CityUpdateDto cityDto)
+        {
+            var cityFromDb = await uow.CityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+            mapper.Map(cityDto, cityFromDb);
+            await uow.SaveAsync();
+            return StatusCode(200);
         }
 
         //http://localhost:5000/api/city/delete/8

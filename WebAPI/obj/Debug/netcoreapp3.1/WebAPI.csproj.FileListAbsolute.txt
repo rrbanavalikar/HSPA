@@ -61,3 +61,6 @@ C:\angular9\my-first-app\WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstan
 C:\angular9\my-first-app\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.csproj.CopyComplete
 C:\angular9\my-first-app\WebAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\angular9\my-first-app\WebAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\angular9\my-first-app\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\angular9\my-first-app\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\angular9\my-first-app\WebAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
