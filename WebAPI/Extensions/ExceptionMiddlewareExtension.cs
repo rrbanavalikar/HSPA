@@ -4,12 +4,17 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
+using WebAPI.Middlewares;
 
 namespace WebAPI.Extensions
 {
     public static class ExceptionMiddlewareExtension
     {
         public static void ConfigureExceptionHandler(this IApplicationBuilder app, IWebHostEnvironment env)
+        {
+           app.UseMiddleware<ExceptionMiddlewares>();
+        }
+        public static void ConfigureBuiltinExceptionHandler(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
