@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CityController : ControllerBase
+    public class CityController : BaseController
     {
           private readonly ICityRepository repo;
         private readonly IUnitOfWork uow;
