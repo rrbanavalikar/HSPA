@@ -9,14 +9,14 @@ using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Authorize]
     public class CityController : BaseController
     {
-          private readonly ICityRepository repo;
+        private readonly ICityRepository repo;
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
 
@@ -28,9 +28,11 @@ namespace WebAPI.Controllers
 
         //GET api/city
         [HttpGet]
+
+       [AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {
-          throw new UnauthorizedAccessException();
+          //throw new UnauthorizedAccessException();
             //var cities = await dc.Cities.ToListAsync();
             var cities = await uow.CityRepository.GetCitiesAsync();
             var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
