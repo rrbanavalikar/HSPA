@@ -62,6 +62,9 @@ namespace WebAPI
 
             app.UseRouting();
 
+            app.UseHsts();//http strict transport protocol
+            app.UseHttpsRedirection();
+
             app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthentication();
