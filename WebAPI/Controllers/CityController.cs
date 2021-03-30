@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
     [Authorize]
     public class CityController : BaseController
     {
-        private readonly ICityRepository repo;
+        //private readonly ICityRepository repo;
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
 
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
             cityFromDb.LastUpdatedOn = DateTime.Now;
             mapper.Map(cityDto, cityFromDb);
 
-            throw new Exception("Some unknown error occured");
+            //throw new Exception("Some unknown error occured");
             await uow.SaveAsync();
             return StatusCode(200);
         }
