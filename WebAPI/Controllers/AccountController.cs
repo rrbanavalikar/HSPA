@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WebAPI.DTOs;
 using WebAPI.Errors;
+using WebAPI.Extensions;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 
@@ -50,6 +51,13 @@ namespace WebAPI.Controllers
     public async Task<IActionResult> Register(LoginReqDto loginReq)
     {
         ApiErrors apiError = new ApiErrors();
+
+        if(loginReq.UserName.IsEmpty() || loginReq.Password.IsEmpty()){
+        apiError.ErrorCode = BadRequest().StatusCode;
+        apiError.ErrorMessage = "User name or password can not be blank";
+        return BadRequest(apiError);
+        }
+
         if(await uow.UserRepository.UserAlreadyExists(loginReq.UserName))
         {
         apiError.ErrorCode = BadRequest().StatusCode;
