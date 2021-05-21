@@ -8,6 +8,8 @@ namespace WebAPI.Interfaces
 
         IUserRepository UserRepository{get;}
 
+        IPropertyRepository PropertyRepository{get;}
+
         Task<bool> SaveAsync();
     }
 }
