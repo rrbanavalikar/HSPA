@@ -3,6 +3,7 @@ namespace WebAPI.DTOs
     public class PropertyListDto
     {
         public int Id { get; set; }
+        public int sellRent { get; set; }
         public string Name { get; set; }
         public string PropertyType { get; set; }
         public string FurnishingType { get; set; }
